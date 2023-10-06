@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
             @user = User.find_by_credentials(params[:user][:username], params[:user][:password])
             flash[:errors] = ['Invalid username or password']
             render :new
+        end
     end
 
     def destroy

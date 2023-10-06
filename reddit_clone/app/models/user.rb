@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+    has_many :moderator,
+        primary_key: :id,
+        foreign_key: :moderator_id,
+        class_name: :User,
+        inverse_of: :subs
     # FIGVAPEBR
     before_validation :ensure_session_token
 

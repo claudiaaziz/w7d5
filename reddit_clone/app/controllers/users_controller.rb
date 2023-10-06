@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+    
     def index
         @users = User.all
+        render :index
     end
 
     def new
@@ -9,15 +11,15 @@ class UsersController < ApplicationController
     end
 
     def create
-        
-    end
-
-    def edit
-
-    end
-
-    def update
-
+        @user = User.new(user_params)
+        if @user.save
+            login(@user)
+            redirect_to users_url
+        else
+            flash.now[:errors] = @user.errors.full_messages
+            @user = User.new(username: params[:user][:username])
+            render :new
+        end
     end
 
     def show
@@ -28,6 +30,6 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).
+        params.require(:user).permit(:username, :password)
     end 
 end
